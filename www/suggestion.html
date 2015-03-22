@@ -1,0 +1,1957 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/entry.css">
+    <script type="text/javascript">
+  
+    
+<!--
+function keisan(){
+
+    // 設定開始
+
+    //希望投資金額
+    var price1 = Number(document.form1.return.value) ; // 単価を設定
+    document.form1.field1.value = price1; // 小計を表示
+
+    //期待リターン
+	var price2 = (document.form1.ret.selectedIndex) + 2; // 単価を設定
+	document.form1.field2.value = price2; // 小計を表示
+
+
+
+	// 設定終了
+    
+
+ var num = price2;
+
+switch (num){
+  case 1:
+　　var total="ポートフォリオtype1";
+    var jb="25%"
+    var js="25%"
+    var fb="25%"
+    var fs="25%"
+    var ds="25%"
+    var plan="ローリスクローリターン"
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+        
+ 
+
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type1",10,20);
+        
+        // 赤い円弧を描く
+        sAngle = (  0 - 90) * Math.PI / 180;
+        eAngle = (90 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (  90 - 90) * Math.PI / 180;
+        eAngle = (180 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (180 - 90) * Math.PI / 180;
+        eAngle = (270 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        sAngle = (270 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+
+        
+    }
+
+    break;
+  case 2:
+    var total="ポートフォリオtype2";
+    var jb=100;
+    var js=0;
+    var fb=0;
+    var fs=0;
+    var ds=0;
+    var plan="ローリスクローリターン"
+    
+　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+        
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+　      ctx.fillText("Type2",10,20);
+ 
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (360 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (360 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (360 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+    }
+
+    break;
+  case 3:
+    var total="ポートフォリオtype3";
+    var jb=70;
+    var js=10;
+    var fb=10;
+    var fs=10;
+    var ds=0;
+    var plan="ローリスクローリターン"
+
+　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+
+　　　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+        
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type3",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (  0 - 90) * Math.PI / 180;
+        eAngle = (252 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (252 - 90) * Math.PI / 180;
+        eAngle = (288 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (288 - 90) * Math.PI / 180;
+        eAngle = (324 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (324 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+    }
+    break;
+  case 4:
+    var total="ポートフォリオtype4";
+    var jb=46.15;
+    var js=15.38;
+    var fb=15.38;
+    var fs=23.08;
+    var ds=0;
+    var plan="ローリスクローリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type4",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (166 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (166 - 90) * Math.PI / 180;
+        eAngle = (222 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (222 - 90) * Math.PI / 180;
+        eAngle = (277 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (277 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+    }
+    break;
+  case 5:
+    var total="ポートフォリオtype5";
+    var jb=42.86;
+    var js=14.29;
+    var fb=14.29;
+    var fs=14.29;
+    var ds=14.29;
+    var plan="ローリスクローリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type5",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (154 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (154 - 90) * Math.PI / 180;
+        eAngle = (206 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (206 - 90) * Math.PI / 180;
+        eAngle = (258 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        
+        // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (258 - 90) * Math.PI / 180;
+        eAngle = (310 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+   
+          // ピンクの円弧を描く
+        sAngle = (310 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    
+    break;
+  case 6:
+    var total="ポートフォリオtype6";
+    var jb=18.18;
+    var js=18.18;
+    var fb=27.27;
+    var fs=18.18;
+    var ds=18.18;
+    var plan="ローリスクローリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type6",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (65 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (65 - 90) * Math.PI / 180;
+        eAngle = (130 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (130 - 90) * Math.PI / 180;
+        eAngle = (228 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();　
+        
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         // 青の円弧を描く
+        sAngle = (228 - 90) * Math.PI / 180;
+        eAngle = (294 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        
+          // ピンクの円弧を描く
+        sAngle = (294 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 7:
+    var total="ポートフォリオtype7";
+    var jb=15.38;
+    var js=23.08;
+    var fb=15.38;
+    var fs=15.38;
+    var ds=30.77;
+    var plan="ミドルリスクミドルリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type7",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (55 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (55 - 90) * Math.PI / 180;
+        eAngle = (138 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (138 - 90) * Math.PI / 180;
+        eAngle = (193 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        
+        // 青の円弧を描く
+        sAngle = (193 - 90) * Math.PI / 180;
+        eAngle = (248 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        // ピンクの円弧を描く
+        sAngle = (248 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 8:
+    var total="ポートフォリオtype8";
+    var jb=9.52;
+    var js=14.29;
+    var fb=9.52;
+    var fs=28.57;
+    var ds=38.1;
+    var plan="ミドルリスクミドルリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type8",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (34 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (34 - 90) * Math.PI / 180;
+        eAngle = (86 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (86 - 90) * Math.PI / 180;
+        eAngle = (120 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        
+         // 青の円弧を描く
+         sAngle = (120 - 90) * Math.PI / 180;
+        eAngle = (223 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        // ピンクの円弧を描く
+        sAngle = (223 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 9:
+    var total="ポートフォリオtype9";
+    var jb=0;
+    var js=17.72;
+    var fb=12.66;
+    var fs=18.99;
+    var ds=50.63;
+    var plan="ミドルリスクミドルリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type9",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (64 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (64 - 90) * Math.PI / 180;
+        eAngle = (110 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        
+        // 青の円弧を描く
+        sAngle = (110 - 90) * Math.PI / 180;
+        eAngle = (178 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        // ピンクの円弧を描く
+        sAngle = (178 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 10:
+    var total="ポートフォリオtype10";
+    var jb=0;
+    var js=11.11;
+    var fb=11.11;
+    var fs=11.11;
+    var ds=66.67;
+    var plan="ハイリスクハイリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type10",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (40 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (40 - 90) * Math.PI / 180;
+        eAngle = (80 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        
+        // 青の円弧を描く
+         sAngle = (80 - 90) * Math.PI / 180;
+        eAngle = (120 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+                
+        // ピンクの円弧を描く
+        sAngle = (120 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;  
+  case 11:
+    var total="ポートフォリオtype11";
+    var jb=0;
+    var js=5.00;
+    var fb=5.00;
+    var fs=10.0;
+    var ds=80.0;
+    var plan="ハイリスクハイリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type11",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (18 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (18 - 90) * Math.PI / 180;
+        eAngle = (36 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+        
+        // 青の円弧を描く
+        sAngle = (36 - 90) * Math.PI / 180;
+        eAngle = (72 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        // ピンクの円弧を描く
+        sAngle = (72 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 12:
+    var total="ポートフォリオtype12";
+    var jb=0;
+    var js=0;
+    var fb=0;
+    var fs=4.76;
+    var ds=95.24;
+    var plan="ハイリスクハイリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type12",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+ 
+        // 青の円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (17 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+    
+        // ピンクの円弧を描く
+        sAngle = (17 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+  
+
+    }
+    break;
+  case 13:
+    var total="ポートフォリオtype13";
+    var jb=0
+    var js=0;
+    var fb=0;
+    var fs=0;
+    var ds=100;
+    var plan="ハイリスクハイリターン"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type13",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+        // ピンクの円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,255,.5)";
+        ctx.fill();
+    }
+    break;
+  case 14:
+    var total="ポートフォリオtype14";
+    var jb=20;
+    var js=30;
+    var fb=20;
+    var fs=30;
+    var ds=0;
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type14",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (0 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (0 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+    }
+    break;
+  case 15:
+    var total="ポートフォリオtype15";
+    var jb="20%"
+    var js="30%"
+    var fb="20%"
+    var fs="30%"
+    var ds="0%"
+    
+    　　//相関係数
+        var cojsjb=0.16; //国内株と国内債券
+        var cofbjb=-0.06; //外国債券と国内債券
+        var cofsjb=-0.05; //外国株式と国内債券
+        var codsjb=-0.29; //新興国株式と国内債券
+        var cofbjs=-0.25; //外国債券と国内株式
+        var cofsjs=0.27; //外国株式と国内株式
+        var codsjs=0.73; //新興国株式と国内株式
+        var cofsfb=0.56; //外国株式と外国債券
+        var codsfb=0.11; //新興国株式と外国債券
+        var codsfs=0.91 //新興国株式と外国株式
+    
+        //リスク
+        var rjb=5.40/100;
+        var rjs=22.15/100;
+        var rfb=13.25/100;
+        var rfs=19.59/100;
+        var rds=26.25/100;
+        
+        //投資比率
+        var ratejb=jb/100;
+        var ratejs=js/100;
+        var ratefb=fb/100;
+        var ratefs=fs/100;
+        var rateds=ds/100;
+    
+        //ポートフォリオのリスクの計算
+        var t1=2*ratejb*ratejs*rjb*rjs*cojsjb+2*ratejb*ratefb*rjb*rfb*cofbjb+2*ratejb*ratefs*rjb*rfs*cofsjb+2*ratejb*rateds*rjb*rds*codsjb;
+        var t2=2*ratejs*ratefb*rjs*rfb*cofbjs+2*ratejs*ratefs*rjs*rfs*cofsjs+2*ratejs*rateds*rjs*rds*codsjs;
+        var t3=2*ratefb*ratefs*rfb*rfs*cofsfb+2*ratefb*rateds*rfb*rds*codsfb;
+        var t4=2*ratefs*rateds*rfs*rds*codsfs;
+        var jb2=Math.pow(rjb*ratejb,2);
+        var js2=Math.pow(rjs*ratejs,2);
+        var fb2=Math.pow(rfb*ratefb,2);
+        var fs2=Math.pow(rfs*ratefs,2);
+        var ds2=Math.pow(rds*rateds,2); 
+       
+        var totalrisk=Math.sqrt(t1+t2+t3+t4+jb2+js2+fb2+fs2+ds2)*100;
+    
+    var imgcanvas = document.getElementById("imgcanvas");
+
+    // canvas要素がｻﾎﾟｰﾄされているか確認
+    if (imgcanvas.getContext)
+    {
+        var ctx = imgcanvas.getContext("2d");
+ 
+        // ｾｯﾄする変数
+        var xPos   = imgcanvas.offsetWidth  / 2;
+        var yPos   = imgcanvas.offsetHeight / 2;
+        var radius = 80;
+        var sAngle = 0;
+        var eAngle = 0;
+ 
+        ctx.clearRect(0,0,imgcanvas.width,imgcanvas.height);
+        ctx.fillText("Type15",10,20);
+         
+        // 赤い円弧を描く
+        sAngle = (  0 - 90) * Math.PI / 180;
+        eAngle = (70 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,0,0,.5)";
+        ctx.fill();
+ 
+         //黄色い円弧を描く
+        sAngle = (  70 - 90) * Math.PI / 180;
+        eAngle = (160 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(255,255,0,.5)";
+        ctx.fill();
+ 
+        // 緑の円弧を描く
+        sAngle = (160 - 90) * Math.PI / 180;
+        eAngle = (290 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+  // 青の円弧を描く
+        ctx.fillStyle   = "rgba(0,255,0,.5)";
+        ctx.fill();
+         sAngle = (290 - 90) * Math.PI / 180;
+        eAngle = (360 - 90) * Math.PI / 180;
+ 
+        ctx.beginPath();
+        ctx.moveTo(xPos , yPos);
+        ctx.arc(xPos, yPos, radius, sAngle, eAngle, false);
+        ctx.closePath();
+ 
+        ctx.fillStyle   = "rgba(0,0,255,.5)";
+        ctx.fill();
+        
+    }
+    break;
+}
+   
+var VaR = price1*(((price2/100.0)*250.0)-(2.33*(totalrisk/100.0)*Math.sqrt(250.0)))/100.0;//1年間での最大損失額
+var ret0 = 0;//元本割れする確率
+  
+document.form1.field_total.value = total; // 合計を表示
+document.form1.field_3.value = jb;
+document.form1.field_4.value = js;
+document.form1.field_5.value = fb;
+document.form1.field_6.value = fs;
+document.form1.field_7.value = ds;
+document.form1.field_0.value = plan;
+document.form1.field_8.value = totalrisk.toFixed(2);
+document.form1.field_9.value = 0;
+document.form1.field_10.value = price1-VaR.toFixed(0);
+}
+
+// --> 
+</script> 
+
+<script src="js/Chart.js"></script>
+
+
+</head>
+<body>
+    <a class="button1" id="toggle-login">最適なアセットアロケーションを計算します</a>
+
+
+<BR>
+<div id="login">
+
+<form action="#" name="form1">
+    <a class="button1" id="toggle-login">希望投資金額を入力してください</a>
+<br/>
+<input type="email2" name="return" placeholder=""/>&nbsp;&nbsp;円
+<BR>
+
+
+
+</select>
+<input type="hidden" name="field1" value="0">
+
+<BR>
+ <a class="button1" id="toggle-login">期待リターンを入力してください</a>
+ <BR>
+<select name="ret" size="3" onChange="keisan()" width="250">
+
+<option value="2">2%</option>
+<option value="3">3%</option>
+<option value="4">4%</option>
+<option value="5">5%</option>
+<option value="6">6%</option>
+<option value="7">7%</option>
+<option value="8">8%</option>
+<option value="9">9%</option>
+<option value="10">10%</option>
+<option value="11">11%</option>
+<option value="12">12%</option>
+<option value="13">13%</option>
+
+<input type="hidden" name="field0">
+<input type="hidden" name="field2">
+<input type="hidden" name="field3">
+<input type="hidden" name="field4">
+<input type="hidden" name="field5">
+<input type="hidden" name="field6">
+<input type="hidden" name="field7">
+
+
+</select>
+<br><br>
+ <a class="button1" id="toggle-login">あなたに最適なプランです！</a>
+<BR>
+<input type="text" name="field_0" size"8">
+<BR><BR>
+ <a class="button1" id="toggle-login">最適なポートフォリオです！</a>
+<BR>
+<input type="text" name="field_total" size"8">
+
+
+<BR>
+ <a class="button1" id="toggle-login">最適なアセットロケーションです！ </a>
+ <br/>
+<canvas type="hidden" id="imgcanvas" width="200" height="200" style="border:solid 1px #999999;">
+<p>canvas非対応ブラウザかJavaScriptが無効になっています。</p>
+</canvas>
+
+</br></br>
+<ul>
+  <li>国内債券</li><input type="email2" name="field_3">&nbsp;&nbsp;％</br>
+  <li2>国内株式</li2><input type="email2" name="field_4">&nbsp;&nbsp;％</br>
+  <li3>外国債券</li3><input type="email2" name="field_5">&nbsp;&nbsp;％</br>
+  <li4>外国株式</li4><input type="email2" name="field_6">&nbsp;&nbsp;％</br>
+  <li5>新興国株式</li5><input type="email2" name="field_7">&nbsp;&nbsp;％</br>
+  <li6>ポートフォリオのリスク<li6><input type="email2" name="field_8">&nbsp;&nbsp;％</br>
+
+  <li8>最大損失を出した場合の残資産価格<li8><input type="email2" name="field_10">&nbsp;&nbsp;円</br>
+</ul>
+
+</form>
+
+</br>
+ <a class="button" href="assetcalculate.html"value="Entry">Next</a>
+
+
+       </div> 
+</body>
+</html>
+
+
+

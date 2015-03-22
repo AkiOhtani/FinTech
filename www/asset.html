@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/index.css">
+
+<script language="JavaScript">
+
+function keisan(){
+// 設定開始
+
+    // 商品1
+	var price1 = Number(document.form1.goods1.value);
+	document.form1.field1.value = price1; 
+
+	// 商品2
+	var price2 = Number(document.form1.goods2.value);
+	document.form1.field2.value = price2; 
+
+	// 商品3
+	var price3 = Number(document.form1.goods3.value);
+	document.form1.field3.value = price3;
+    
+    var price4 = Number(document.form1.goods4.value);
+    document.form1.field4.value = price4;
+    
+    var price5 = Number(document.form1.goods5.value);
+    document.form1.field5.value = price5;
+
+	// 合計を計算
+	var total = price1 + price2 + price3 + price4 + price5;
+
+　　　
+　　//ポートフォリオの投資比率
+    var rate1 = 100 * price1 / (price1+price2+price3+price4+price5);  
+    var rate2 = 100 * price2 / (price1+price2+price3+price4+price5);  
+    var rate3 = 100 * price3 / (price1+price2+price3+price4+price5);  
+    var rate4 = 100 * price4 / (price1+price2+price3+price4+price5);    
+    var rate5 = 100 * price5 / (price1+price2+price3+price4+price5);  
+    var rettotal = (2.00*rate1)+(5.00*rate2)+(4.50*rate3)+(7.00*rate4)+(12.25*rate5);
+    var risktotal = (5.40*rate1)+(22.15*rate2)+(13.25*rate3)+(19.59*rate4)+(26.25*rate5)
+	// 設定終了
+    document.form1.field_total.value = total; 
+    document.form1.field_total1.value = rate1;
+    document.form1.field_total2.value = rate2;
+    document.form1.field_total3.value = rate3;
+    document.form1.field_total4.value = rate4;
+    document.form1.field_total5.value = rate5;
+    document.form1.field_total6.value = (rettotal)/100;
+    document.form1.field_total7.value = (risktotal)/100;// 合計を表示
+
+}
+
+
+// 数値のみを入力可能にする
+function numOnly() {
+  m = String.fromCharCode(event.keyCode);
+  if("0123456789\b".indexOf(m, 0) < 0) return false;
+  return true;
+}
+
+</script>
+</HEAD>
+<BODY background="4.jpg">
+
+<form name="form1">
+ 1. 資産配分を入力してください<BR>
+  <table border=1 width="10">
+    <tr>
+    <th>資産クラス</th>
+    <th>投資額</th>
+    <th>投資比率</th>
+    <th>期待リターン</th>
+    <th>リスク</th>
+    </tr>
+    
+    <tr>
+    <td>日本債券</td>
+    <td><input type="text" name="goods1" onChange="keisan()" size="8"><BR>
+    <td><input type="text" name="field_total1" value="0" size="8"></td>
+    <td><input type="text" name="return1" value="2.00" size="8" ></td>
+    <td><input type="text" name="risk1" value="5.40" size="8"></td>
+    </td>
+    <input type="hidden" name="field1" size="8" value="0"> 
+    </tr>
+    
+    <tr>
+    <td>日本株式</td>
+    <td><INPUT type="text" name="goods2" onChange="keisan()" size="8"><BR>
+    <td><input type="text" name="field_total2" value="0" size="8"></td>
+    <td><input type="text" name="return2" value="5.00" size="8"></td>
+    <td><input type="text" name="risk2" value="22.15" size="8"></td>
+    </td>
+    <input type="hidden" name="field2" size="8" value="0"> 
+    </tr>
+    
+    <tr>
+    <td>海外債券</td>
+    <td><INPUT type="text" name="goods3"  onChange="keisan()" size="8"><BR>
+    <td><input type="text" name="field_total3" value="0" size="8"></td>
+    <td><input type="text" name="return3" value="4.50" size="8" ></td>
+    <td><input type="text" name="risk3" value="13.25" size="8"></td>
+    </td>
+    <input type="hidden" name="field3" size="8" value="0"> 
+    </tr>
+    
+    <tr>
+    <td>海外株式</td>
+    <td><INPUT type="text" name="goods4"  onChange="keisan()" size="8"><BR>
+    <td><input type="text" name="field_total4" value="0" size="8"></td>
+    <td><input type="text" name="return4" value="7.00" size="8"></td>
+    <td><input type="text" name="risk4" value="19.59" size="8"></td>
+    </td>
+    <input type="hidden" name="field4" size="8" value="0"> 
+    </tr>
+    
+    <tr>
+    <td>新興国株式</td>
+    <td><INPUT type="text" name="goods5"  onChange="keisan()" size="8"><BR>
+    <td><input type="text" name="field_total5" value="0" size="8"></td>
+    <td><input type="text" name="return5" value="12.25" size="8"></td>
+    <td><input type="text" name="risk5" value="26.25" size="8"></td>
+    </td>
+    <input type="hidden" name="field5" size="8" value="0"> 
+    </tr>
+    
+    <tr>
+    <td>合計投資額</td>
+    <td><input type="text" name="field_total" value="0" size="8"><BR>
+    <td><input type="text" value="100" size="8"></td>
+    <td><input type="text" name="field_total6" value="0" size="8"></td>
+    <td><input type="text" name="field_total7" value="0" size="8"></td>
+    </tr>
+    
+  </table>
+  
+</form>
+ <a class="button" id="toggle-login" href="assetcalculate.html">NEXT</a>
+
+</BODY>
+</HTML>

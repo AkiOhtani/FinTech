@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/data.js"></script>
+    
+</head>
+<body background="4.jpg">
+   <div class="resultTOP" id="resultTOP">一定投資期間後の資産価格を計算します</div>
+   
+<script type="text/javascript" language="javascript">
+
+
+function calculate(){
+    var a1 = Number(document.form1.t1.value); //設定
+    document.form1.field1.value = a1; // 小計を表示
+    var a2 = Number(document.form1.t2.value); //設定
+    document.form1.field2.value = a2; // 小計を表示
+    var a3 = Number(document.form1.t3.value);  //設定
+    document.form1.field3.value = a3; // 小計を表示
+    var a4 = Number(document.form1.t4.value); //設定
+    document.form1.field3.value = a4; // 小計を表示
+    
+    var m = a1/100 + 1;//expected return+1
+    var s = a2/100;//risk
+    var N = a3;//year
+    var test = Math.pow((s/m),2);
+    var test2 = Math.log(test + 1);
+    var m1 = Math.log(m) - test2 /2;//mean
+    var s1 = Math.sqrt(test2);//standard deviation
+    
+     
+    //After N years
+    var m2 = m1 * N; //mean after N years
+    var s2 = s1 * Math.sqrt(N); //standard deviation after N years
+    var test3 = Math.pow(s2,2);
+    var test4 = Math.exp((2*m2)+test3);
+    var test5 = Math.exp(test3);
+    var ret= Math.exp(m2 + test3/2);//expected return after N years
+    var risk = Math.sqrt(test4 * (test5)); //standard deviation after N years 
+    
+
+    var assetprice = ret * a4 ; //assetprice after N years 
+    
+    document.form1.field_total1.value = Math.round(100*(ret-1));
+    document.form1.field_total2.value = risk;
+    document.form1.field_total3.value = Math.round(assetprice);
+}
+
+
+
+
+</script>
+
+<form name="form1">
+<table>
+<tr>
+<th>クラス</th>
+<th>項目</th>
+</tr>
+<tr>
+<td>期待リターン</td>
+<td><input type="text" name="t1" onChange="calculate()" size="10">&nbsp;&nbsp;%<td><BR>
+</tr>
+<tr>
+<td>リスク</td>
+<td><input type="text" name="t2" onChange="calculate()" size="10">&nbsp;&nbsp;%</td><BR>
+</tr>
+<tr>
+<td>投資期間</td>
+<td><input type="text" name="t3" onChange="calculate()" size="10">&nbsp;&nbsp;年</td><BR>
+</tr>
+<tr>
+<td>元本</td>
+<td><input type="text" name="t4" onChange="calculate()" size="10">&nbsp;&nbsp;円</td><BR>
+</tr>
+<input type="hidden" name="field1">
+<input type="hidden" name="field2">
+<input type="hidden" name="field3">
+<input type="hidden" name="field4">
+<tr>
+<td>N年後の期待リターン</td>
+<td><input type="text" name="field_total1" value="0" size="10">&nbsp;&nbsp;%</td>
+</tr>
+
+<tr>
+<td>N年後のリスク</td>
+<td><input type="text" name="field_total2" value="0"size="10" >&nbsp;&nbsp;%</td>
+</tr>
+
+
+<tr>
+<td>N年後の資産価格</td>
+<td><input type="text" name="field_total3" value="0" size="10">&nbsp;&nbsp;円</td>
+</table>
+
+
+</form>
+
+<br><br>
+
+ <a class="button" id="toggle-login" href="rebalance.html">NEXT</a>
+</body>
+</html>
